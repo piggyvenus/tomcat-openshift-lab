@@ -57,6 +57,7 @@ input 'Promote the Dev image to QA?'
 stage 'deployInTesting'
 openshiftTag(namespace: 'user##-dev', sourceStream: 'myapp',  sourceTag: 'latest', destinationStream: 'myapp', destinationTag: 'promoteToQA')
 sh 'oc project user##-qa'
+sh 'oc delete all --all -n user##-qa'
 sh 'oc new-app user##-dev/myapp:promoteToQA --allow-missing-imagestream-tags=true'
 sh 'oc expose svc myapp'
 }
